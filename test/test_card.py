@@ -16,15 +16,17 @@ class TestCard:
         assert self.ten_of_clubs
         assert self.ace_of_spades
 
-    def test_getters(self):
-        assert self.three_of_hearts.get_suit() == "Hearts"
-        assert self.three_of_hearts.get_num() == 3
+    def test_variables(self):
+        assert self.three_of_hearts.suit == "Hearts"
+        assert self.three_of_hearts.num == 3
 
     def test_str_card_number(self):
-        assert str(self.three_of_hearts) == "3 of Hearts"
+        assert len(str(self.three_of_hearts).split("\n")) == 7
+        assert str(self.three_of_hearts).count('\u2665') == 3
 
     def test_str_card_faceCard(self):
-        assert str(self.ace_of_spades) == "Ace of Spades"
+        assert len(str(self.ace_of_spades).split("\n")) == 7
+        assert str(self.ace_of_spades).count('\u2660') == 1
 
     def test_invalid_suit(self):
         with pytest.raises(ValueError):
