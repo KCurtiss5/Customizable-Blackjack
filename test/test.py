@@ -1,10 +1,6 @@
-import unittest
-import pytest
+class TryTesting():
+    def true_test(self):
+        assert True
 
-class PlaceholderTest(unittest.TestCase):
-
-    def placeholder(self):
-        self.assertEqual('foo'.upper(), 'FOO')
-
-if __name__ == '__main__':
-    unittest.main()
+    def false_test(self):
+        assert not False
