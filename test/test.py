@@ -1,6 +1,6 @@
-class TryTesting():
-    def true_test(self):
+class TestClass:
+    def test_one(self):
         assert True
 
-    def false_test(self):
+    def test_two(self):
         assert not False
