@@ -1,3 +1,6 @@
+from helper_functions import get_card
+
+
 class Card:
     def __init__(self, suit: str, num):
         if not self._validate_suit(suit):
@@ -5,8 +8,8 @@ class Card:
         if not self._validate_num(num):
             raise ValueError(f"Cannot create card, invalid num: {num}")
 
-        self._suit = suit
-        self._num = num
+        self.suit = suit
+        self.num = num
 
     def _validate_suit(self, suit: str) -> bool:
         return suit in ["Hearts", "Diamonds", "Clubs", "Spades"]
@@ -16,11 +19,5 @@ class Card:
             return num >= 2 and num <= 10
         return num in ["Ace", "Jack", "Queen", "King"]
 
-    def get_suit(self):
-        return self._suit
-
-    def get_num(self):
-        return self._num
-
     def __str__(self):
-        return f"{self._num} of {self._suit}"
+        return f"{get_card(self)}"
