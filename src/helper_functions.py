@@ -2,13 +2,13 @@ from os import name, system
 from pathlib import Path
 
 
-def input_int_with_limits(message: str, lower_bound: int, upper_bound: int) -> int:
+def validate_int_input(message: str, lower: int, upper: int) -> int:
     while (True):
         try:
             option = int(input(message))
-            if ((option < lower_bound) or (option > upper_bound)):
+            if ((option < lower) or (option > upper)):
                 print(
-                    f"Please enter a number between {lower_bound} and {upper_bound}")
+                    f"Please enter a number between {lower} and {upper}")
                 continue
             return (option)
         except ValueError:
