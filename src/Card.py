@@ -1,9 +1,9 @@
 class Card:
     def __init__(self, suit: str, num):
         if not self._validate_suit(suit):
-            raise ValueError(f"Cannot create card, invalid suit name {suit}")
+            raise ValueError(f"Cannot create card, invalid suit name: {suit}")
         if not self._validate_num(num):
-            raise ValueError("Cannot create card, invalid num ", num)
+            raise ValueError(f"Cannot create card, invalid num: {num}")
 
         self._suit = suit
         self._num = num
