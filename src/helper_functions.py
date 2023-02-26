@@ -6,12 +6,12 @@ def input_int_with_limits(message: str, lower_bound: int, upper_bound: int) -> i
     while (True):
         try:
             option = int(input(message))
-            if ((option <= lower_bound) or (option >= upper_bound)):
+            if ((option < lower_bound) or (option > upper_bound)):
                 print(
-                    f"Please enter a number between {lower_bound+1} and {upper_bound-1}.")
+                    f"Please enter a number between {lower_bound} and {upper_bound}")
                 continue
             return (option)
-        except ValueError as e:
+        except ValueError:
             print("Please enter a positive integer.")
 
 
