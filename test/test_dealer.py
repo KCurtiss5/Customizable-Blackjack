@@ -43,6 +43,14 @@ class TestDealer:
         assert self.dealer.hand.get_score() == 17
         assert self.dealer.should_dealer_hit()
 
+    def test_dealer_hit_under_17(self):
+        self.dealer.hand = Hand(0, [self.three_of_hearts, self.ten_of_clubs])
+        assert self.dealer.should_dealer_hit()
+
+    def test_dealer_not_hit_over_17(self):
+        self.dealer.hand = Hand(0, [self.ten_of_clubs, self.ace_of_spades])
+        assert not self.dealer.should_dealer_hit()
+
     def test_dealer_reveal(self):
         assert len(self.dealer.reveal().split("\n")) == 8
         assert "Dealer has" in self.dealer.reveal()
