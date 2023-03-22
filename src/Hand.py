@@ -42,5 +42,8 @@ class Hand:
     def __len__(self) -> int:
         return len(self.cards)
 
+    def __getitem__(self, item) -> Card:
+        return self.cards[item]
+
     def __repr__(self) -> str:
         return get_hand(self)
