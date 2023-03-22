@@ -5,7 +5,7 @@ from helper_functions import get_hand
 class Hand:
     def __init__(self, bet: int, card_list=[]) -> None:
         if any(not isinstance(card, Card) for card in card_list):
-            raise ValueError(f"Cannot create hand, invalid card in card_list.")
+            raise ValueError(f"Cannot create hand, invalid card_list {card_list}.")
         self.cards = card_list
         if (not isinstance(bet, int)):
             raise ValueError(
