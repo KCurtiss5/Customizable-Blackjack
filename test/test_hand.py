@@ -19,6 +19,16 @@ class TestHand:
     def test_constructor(self):
         assert self.three_card_hand
 
+    def test_constructor_with_invalid_bet(self):
+        with pytest.raises(ValueError):
+            Hand("test", [])
+
+    def test_constructor_with_invalid_cardList(self):
+        self.three_of_hearts = "test"
+        with pytest.raises(ValueError):
+            self.three_card_hand = Hand(
+                500, [self.three_of_hearts, self.ten_of_clubs, self.ace_of_spades])
+
     def test_variables(self):
         assert self.three_card_hand.bet == 500
         assert len(self.three_card_hand) == 3
