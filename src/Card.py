@@ -4,9 +4,9 @@ from helper_functions import get_card
 class Card:
     def __init__(self, suit: str, num):
         if not self._validate_suit(suit):
-            raise ValueError(f"Cannot create card, invalid suit name: {suit}")
+            raise ValueError(f"Error, invalid suit name: {suit}")
         if not self._validate_num(num):
-            raise ValueError(f"Cannot create card, invalid num: {num}")
+            raise ValueError(f"Error, invalid num: {num}")
 
         self.suit = suit
         self.num = num
