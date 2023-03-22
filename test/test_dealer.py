@@ -44,5 +44,7 @@ class TestDealer:
         assert self.dealer.should_dealer_hit()
 
     def test_dealer_reveal(self):
-        assert len(self.dealer.reveal().split("\n")) == 7
+        assert len(self.dealer.reveal().split("\n")) == 8
+        assert "Dealer has" in self.dealer.reveal()
+        assert '>' in self.dealer.reveal()
 
