@@ -9,7 +9,7 @@ class Hand:
         self.cards = card_list
         if (not isinstance(bet, int)):
             raise ValueError(
-                f"Cannot create hand, invalid bet {bet}. Bet must be an integer.")
+                f"Cannot create hand, invalid bet {bet}.")
         self.bet = bet
 
     def clear_hand(self) -> None:
