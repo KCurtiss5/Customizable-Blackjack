@@ -1,18 +1,18 @@
-from Hand import Hand
-import Card
 import pytest
 import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
+from Card import Card
+from Hand import Hand
 
 
 class TestHand:
 
     @pytest.fixture(autouse=True)
     def before_each(self):
-        self.three_of_hearts = Card.Card("Hearts", 3)
-        self.ten_of_clubs = Card.Card("Clubs", 10)
-        self.ace_of_spades = Card.Card("Spades", "Ace")
+        self.three_of_hearts = Card("Hearts", 3)
+        self.ten_of_clubs = Card("Clubs", 10)
+        self.ace_of_spades = Card("Spades", "Ace")
         self.three_card_hand = Hand(
             500, [self.three_of_hearts, self.ten_of_clubs, self.ace_of_spades])
 

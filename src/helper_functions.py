@@ -66,13 +66,16 @@ def add_suit(string: str, card) -> str:
         "Diamonds": '\u2666',
         "Hearts": '\u2665'
     }
-    if card.suit == "Hearts" or card.suit == "Diamonds":
-        return string.replace('x', prRed(suits[card.suit]))
-    return string.replace('x', suits[card.suit])
+    string = string.replace('x', suits[card.suit])
+    string = print_red(string, ['\u2666','\u2665'])
+    return string
 
 
-def prRed(input: str) -> str:
-    return "\033[91m{}\033[00m".format(input)
+
+def print_red(input: str, char_list: list) -> str:
+    for character in char_list:
+        input.replace(character, f"\033[38;41 {character} \033[00m")
+    return input
 
 
 def printBanner():

@@ -21,3 +21,7 @@ class Card:
 
     def __str__(self):
         return f"{get_card(self)}"
+    
+if __name__ == "__main__":
+    card = Card("Hearts",3)
+    print(card)
