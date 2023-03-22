@@ -42,17 +42,19 @@ def get_card(card) -> str:
     return string
 
 
-def get_hand(Hand) -> str:
+def get_hand(Hand, hidden_card=False, hidden_card_index=-1) -> str:
     files = []
-    for card in Hand.cards:
-        files.append(open(locate_file(f"{card.num}.txt"), "r"))
+    for index in range(0, len(Hand)):
+        if (hidden_card and hidden_card_index == index):
+            files.append(open(locate_file("back.txt"), 'r'))
+        else:
+            files.append(open(locate_file(f"{Hand[index].num}.txt"), 'r'))
     string = ""
     for i in range(0, 6):
         for j in range(len(Hand.cards)):
             additional_line = files[j].readline().rstrip()
             additional_line = add_suit(additional_line, Hand.cards[j])
             string += additional_line
-            string += '  '
             if i == 0:  # super weird thing about character spacing
                 string += ' '
         string += '\n'
@@ -63,19 +65,14 @@ def add_suit(string: str, card) -> str:
     suits = {
         "Spades": '\u2660',
         "Clubs": '\u2663',
-        "Diamonds": '\u2666',
-        "Hearts": '\u2665'
+        "Diamonds": prRed('\u2666'),
+        "Hearts": prRed('\u2665')
     }
-    string = string.replace('x', suits[card.suit])
-    string = print_red(string, ['\u2666','\u2665'])
-    return string
+    return string.replace('x', suits[card.suit])
 
 
-
-def print_red(input: str, char_list: list) -> str:
-    for character in char_list:
-        input.replace(character, f"\033[38;41 {character} \033[00m")
-    return input
+def prRed(input: str) -> str:
+    return f"\033[91m{input}\033[00m"
 
 
 def printBanner():
