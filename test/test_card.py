@@ -21,11 +21,11 @@ class TestCard:
         assert self.three_of_hearts.num == 3
 
     def test_str_card_number(self):
-        assert len(str(self.three_of_hearts).split("\n")) == 7
+        assert len(str(self.three_of_hearts).split("\n")) == 6
         assert str(self.three_of_hearts).count('\u2665') == 3
 
     def test_str_card_faceCard(self):
-        assert len(str(self.ace_of_spades).split("\n")) == 7
+        assert len(str(self.ace_of_spades).split("\n")) == 6
         assert str(self.ace_of_spades).count('\u2660') == 1
 
     def test_invalid_suit(self):

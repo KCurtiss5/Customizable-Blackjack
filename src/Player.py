@@ -22,5 +22,4 @@ class Dealer(Person):
         return self.H17 if score == 17 else score < 17
 
     def reveal(self):
-        return f"Dealer has \n \
-            {get_hand(self.hand, hidden_card=True, hidden_card_index=1)}"
+        return f"Dealer has\n{get_hand(self.hand, True)}"
