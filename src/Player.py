@@ -23,4 +23,4 @@ class Dealer(Person):
 
     def reveal(self):
         return f"Dealer has \n \
-            {get_hand(self.hand, hidden_card=True, hidden_card_index=1)}"
+            {get_hand(self.hand, hidden_card=True, hidden_index=1)}"
