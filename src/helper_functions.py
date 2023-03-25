@@ -19,63 +19,50 @@ def clear_terminal():
     system('cls' if name == 'nt' else 'clear')
 
 
-def locate_file(fileName: str) -> str:
+def locate_file(file: str) -> str:
     cwd = Path().absolute()
-    if str(cwd.parents[0]).endswith("blackjack"):
-        cwd = cwd.parents[0]
     try:
-        path = next(cwd.rglob(fileName))
+        path = next(cwd.rglob(file))
     except StopIteration:
-        raise RuntimeError("File not found")
+        raise RuntimeError(f"Error: {file} not found")
     return path
 
 
-def returnFile(fileName: str) -> list:
-    return open(locate_file(fileName), "r").readlines()
+def get_file_contents(file: str) -> list:
+    return open(locate_file(file), "r").read()
 
 
 def get_card(card) -> str:
-    string = "\n"
-    for line in returnFile(f"{card.num}.txt"):
-        line = add_suit(line, card)
-        string += line
-    return string
+    return add_suit(get_file_contents(f"{card.num}.txt"), card)
 
 
-def get_hand(Hand, hidden_card=False, hidden_card_index=-1) -> str:
-    files = []
-    for index in range(0, len(Hand)):
-        if (hidden_card and hidden_card_index == index):
-            files.append(open(locate_file("back.txt"), 'r'))
+def get_hand(hand, hidden_card=False, hidden_index=1):
+    cards = []
+    for index in range(0, len(hand)):
+        if (hidden_card and hidden_index == index):
+            cards.append(get_file_contents("back.txt"))
         else:
-            files.append(open(locate_file(f"{Hand[index].num}.txt"), 'r'))
-    string = ""
-    for i in range(0, 6):
-        for j in range(len(Hand.cards)):
-            additional_line = files[j].readline().rstrip()
-            additional_line = add_suit(additional_line, Hand.cards[j])
-            string += additional_line
-            if i == 0:  # super weird thing about character spacing
-                string += ' '
-        string += '\n'
-    return string
+            cards.append(get_card(hand[index]))
+    return_string = ""
+    for card in zip(*(card.splitlines() for card in tuple(cards))):
+        return_string += ' '.join(card) + '\n'
+    return return_string
 
 
 def add_suit(string: str, card) -> str:
     suits = {
         "Spades": '\u2660',
         "Clubs": '\u2663',
-        "Diamonds": prRed('\u2666'),
-        "Hearts": prRed('\u2665')
+        "Diamonds": make_red('\u2666'),
+        "Hearts": make_red('\u2665')
     }
     return string.replace('x', suits[card.suit])
 
 
-def prRed(input: str) -> str:
+def make_red(input: str) -> str:
     return f"\033[91m{input}\033[00m"
 
 
 def printBanner():
     clear_terminal()
-    for line in returnFile(".banner.txt"):
-        print(line, end="")
+    print(get_file_contents(".banner.txt"))
