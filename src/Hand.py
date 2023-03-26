@@ -11,6 +11,7 @@ class Hand:
             raise ValueError(
                 f"Error, invalid bet: {bet}.")
         self._bet = bet
+        self.finished = False
 
     def set_bet(self, bet: int):
         self._bet = bet
