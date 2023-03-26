@@ -3,14 +3,18 @@ from random import shuffle
 
 class Deck:
     def __init__(self, deck_num=1, max_turns=1):
+        if not isinstance(deck_num, int) or deck_num <= 0:
+            raise ValueError(f"Error, invalid deck_num: {deck_num}.")
         self.deck_num = deck_num
-        self.deck = []
-        self.used_cards = []
-        self.shuffle()
+        if not isinstance(max_turns, int) or max_turns <= 0:
+            raise ValueError(f"Error, invalid max_turns: {max_turns}.")
         self.max_turns = max_turns
+        self.deck = self.build_deck()
+        self.used_cards = []
         self.turn_counter = 0
+        self.shuffle()
 
-    def build_deck(self) -> None:
+    def build_deck(self) -> list:
         deck = []
         for _ in range(0, self.deck_num):
             for x in ["Spades", "Clubs", "Diamonds", "Hearts"]:
@@ -20,7 +24,7 @@ class Deck:
                     deck.append(Card(x, y))
         return deck
     
-    def increment_turn_count(self):
+    def increment_turn_count(self) -> None:
         self.turn_counter+=1
         if (self.turn_counter >= self.max_turns):
             self.turn_counter = 0
@@ -28,11 +32,12 @@ class Deck:
 
     def shuffle(self) -> None:
         print("Shuffling deck...")
-        self.deck = self.build_deck()
+        self.deck = self.deck + self.used_cards
+        self.used_cards = []
         shuffle(self.deck)
         return
 
-    def deal_card(self):
+    def deal_card(self) -> Card:
         if (len(self.deck) == 0):
             self.shuffle()
             self.turn_counter = 0
