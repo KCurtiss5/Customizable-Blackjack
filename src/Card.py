@@ -18,7 +18,7 @@ class Card:
         if (isinstance(num, int)):
             return num >= 2 and num <= 10
         return num in ["Ace", "Jack", "Queen", "King"]
-    
+
     def __eq__(self, other):
         return (self.suit == other.suit and self.num == other.num)
 

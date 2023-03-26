@@ -1,6 +1,7 @@
 from Card import Card
 from random import shuffle
 
+
 class Deck:
     def __init__(self, deck_num=1, max_turns=1):
         if not isinstance(deck_num, int) or deck_num <= 0:
@@ -23,9 +24,9 @@ class Deck:
                 for y in ["Jack", "Queen", "King", "Ace"]:
                     deck.append(Card(x, y))
         return deck
-    
+
     def increment_turn_count(self) -> None:
-        self.turn_counter+=1
+        self.turn_counter += 1
         if (self.turn_counter >= self.max_turns):
             self.turn_counter = 0
             self.shuffle()
