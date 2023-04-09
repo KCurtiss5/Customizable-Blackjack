@@ -1,5 +1,17 @@
+from enum import Enum, auto
 from Card import Card
 from helper_functions import get_hand
+from math import floor
+
+
+class Outcome(Enum):
+    UNFINISHED = auto()
+    SURRENEDERED = auto()
+    NATURAL = auto()
+    WIN = auto()
+    PUSH = auto()
+    BUST = auto()
+    LOSE = auto()
 
 
 class Hand:
@@ -10,18 +22,20 @@ class Hand:
         if (not isinstance(bet, int)):
             raise ValueError(
                 f"Error, invalid bet: {bet}.")
-        self._bet = bet
-        self.finished = False
+        self.bet = bet
+        self.result = Outcome.UNFINISHED
 
     def set_bet(self, bet: int):
-        self._bet = bet
+        self.bet = bet
+
+    def set_result(self, outcome: Outcome):
+        self.result = outcome
 
     def clear_hand(self) -> None:
         self.__init__(0)
 
     def take_card(self) -> Card:
-        card = self.cards.pop()
-        return card
+        return self.cards.pop()
 
     def receive_card(self, card: Card) -> None:
         self.cards.append(card)
@@ -42,6 +56,18 @@ class Hand:
             if (score + 10 <= 21):
                 score += 10
         return score
+
+    def money_owed(self) -> int:
+        if self.result == Outcome.SURRENEDERED:
+            return floor(-0.5 * self.bet)
+        elif self.result == Outcome.NATURAL:
+            return floor(1.5 * self.bet)
+        elif self.result == Outcome.WIN:
+            return floor(1 * self.bet)
+        elif self.result == Outcome.PUSH:
+            return 0
+        else:  # bust or lose
+            return floor(-1 * self.bet)
 
     def __len__(self) -> int:
         return len(self.cards)

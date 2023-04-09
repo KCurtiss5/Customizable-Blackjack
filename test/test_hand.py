@@ -30,7 +30,7 @@ class TestHand:
                 500, [self.three_of_hearts, self.ten_of_clubs, self.ace_of_spades])
 
     def test_variables(self):
-        assert self.three_card_hand._bet == 500
+        assert self.three_card_hand.bet == 500
         assert len(self.three_card_hand) == 3
 
     def test_str(self):

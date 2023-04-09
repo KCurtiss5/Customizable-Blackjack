@@ -1,5 +1,6 @@
 from Card import Card
-from Hand import Hand
+from Hand import Hand, Outcome
+from Deck import Deck
 from abc import ABC, abstractmethod
 from helper_functions import get_hand, validate_int_input
 from json import JSONEncoder
@@ -41,83 +42,79 @@ class Player(Person):
         self.money = money
         self.extra_hands = []
 
-    def play(self):
-        print(f"\n{self.name} has \n{self.hand}")
-        if self.hand.get_score() == 21 and len(self.hand.cards) == 2:
-            print(f"{self.name} has natural blackjack!")
-            return
-        self.play_hand(self.hand)
-        for extra_hand in self.extra_hands:
-            self.play_hand(extra_hand)
-        return
-    
-    def play_hand(self, hand):
-        arg = input(
-            f"What do you want to do, {self.name}?: ").lower().strip()
-        if (arg == "split"):
-            self.split_hand(hand)
-        if (arg == 'hit'):
-            self.hit(hand, deck)
-        elif (arg == "double"):
-            self.double(hand)
-        elif (arg == 'stand'):
-            self.stand(hand)
-        else:
-            print("Actions are: \"hit\" or \"stand\" or \"double\" or \"split\"")
-
-    def hit(self, hand, deck):
-        print("Hit")
-        '''self.hand.receiveCard(deck)
-                print(f"You drew {str(self.hand.cards[-1])}")
-                if (arg == "hit" and self.hand.score < 21):
-                    continue
-                if (self.hand.score > 21):
-                    print("Oops, you busted.")
-                if (self.hand.score == 21):
-                    print("Blackjack!\n")
-        '''
-
-    def stand(self):
-        print("Hit")
-        '''
-        print("Standing.")
-                self.hand.setFinished()'''
-
-    def double(self):
-        print("Double")
-        '''
-        if self.hand.bet * 2 > self.money:
-                        print(
-                            f"{self.name} cannot double down. Not enough money.")
-                        continue
-                    else:
-                        print(
-                            f"{self.name} must bet ${self.hand.bet} more.")
-                        self.hand.bet *= 2
-        '''
-
-    def split_hand(self):
-        print("Split")
-        '''if (len(player.hand.cards) == 2 and player.hand.cards[0].num == player.hand.cards[1].num
-            and len(player.hand) < 3 and player.money-2*player.hand.bet > 0):
-            print("Successfully split:\n")
-            newHand = Hand(player.hand.bet)
-                    transfer_card = player.hand.splitCards(deck)
-                    newHand.receiveCard(deck, transfer_card)
-                    print(
-                        f"You drew a {str(player.hand.cards[-1])} for your first hand.")
-                    newHand.receiveCard(deck)
-                    print(
-                        f"You drew a {str(newHand.cards[-1])} for your second hand.")
-                    player.hand.append(newHand)
-                    continue'''
-
-    def surrender(self):
-        print("Surrender")
-
     def bet(self, minimum_bet: int):
         self.hand.set_bet(validate_int_input(
             f"{self.name}, place your bet: ", minimum_bet, self.money))
+
+    def play(self, deck):
+        print(f"\n{self.name} has \n{self.hand}")
+        if self.hand.get_score() == 21 and len(self.hand.cards) == 2:
+            print(f"{self.name} has natural blackjack!")
+            self.hand.set_result(Outcome.NATURAL)
+            return
+        self.play_hand(self.hand, deck)
+        return
+
+    def play_hand(self, hand: Hand, deck: Deck):
+        arg = input(
+            f"What do you want to do, {self.name}?: ").lower().strip()
+        if (arg == 'hit'):
+            self.hit(hand, deck)
+        elif (arg == 'stand'):
+            self.stand()
+        elif (arg == "double"):
+            self.double(hand, deck)
+        elif (arg == "surrender"):
+            self.surrender(hand, deck)
+        elif (arg == "split"):
+            self.split_hand(hand, deck)
+        else:
+            print(
+                "Actions are: \"hit\", \"stand\", \"double\", \"surrender\" or \"split\"")
+
+    def hit(self, hand: Hand, deck: Deck, continue_with_hand=True):
+        hand.receive_card(deck.deal_card())
+        print(f"{hand}")
+        if (hand.get_score() < 21):
+            self.play_hand(hand, deck) if continue_with_hand else print(
+                f"Finished with {hand.get_score()}")
+        elif (hand.get_score() > 21):
+            print("Oops, you busted.")
+            hand.set_result(Outcome.BUST)
+        else:
+            print("Blackjack!\n")
+
+    def stand(self):
+        print("Standing")
+
+    def double(self, hand, deck):
+        if hand.bet*2 > self.money:
+            print("You cannot double down. Not enough money.")
+            self.play_hand(hand, deck)
+        else:
+            print(f"{self.name} must bet ${hand.bet} more.")
+            hand.set_bet(hand.bet*2)
+            self.hit(hand, deck, False)
+
+    def split_hand(self, hand: Hand, deck: Deck):
+        if (len(hand) == 2 and hand[0] == hand[1] and self.money >= hand.bet):
+            print("Successfully split\n")
+            transfer_card = hand.take_card()
+            newHand = Hand(hand.bet, [transfer_card])
+            self.hit(hand, deck)
+            self.hit(newHand, deck)
+            self.extra_hands.append(newHand)
+        else:
+            print("You can't split.")
+            self.play_hand(hand, deck)
+
+    def surrender(self, hand: Hand, deck: Deck):
+        if (len(hand) == 2 and len(self.extra_hands) == 0):
+            print("Surrendering...")
+            hand.set_result(Outcome.SURRENEDERED)
+        else:
+            print("Can't surrender. You can only surrender on your first action.")
+            self.play_hand(hand, deck)
 
     def __str__(self):
         return (f"{self.name}, you have ${self.money}.")
@@ -133,8 +130,10 @@ class PlayerEncoder(JSONEncoder):
 
 if __name__ == "__main__":
     koby = Player("Koby", 1000)
+    deck = Deck()
     print(koby)
     koby.bet(50)
-    koby.add_card_to_hand(Card("Hearts", 5))
+    koby.add_card_to_hand(Card("Hearts", "Ace"))
     koby.add_card_to_hand(Card("Clubs", "Ace"))
-    koby.play()
+    koby.play(deck)
+    print(koby.hand.result)
