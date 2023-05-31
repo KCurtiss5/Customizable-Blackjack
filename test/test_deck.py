@@ -54,13 +54,13 @@ class TestDeck:
 
     def test_shuffle_after_1_turn(self, capfd):
         self.deck.increment_turn_count()
-        output, err = capfd.readouterr()
+        output, _ = capfd.readouterr()
         assert ("Shuffling deck..." in output)
 
     def test_shuffle_after_5_turns(self, capfd):
         for _ in range(0,5):
             self.deck.increment_turn_count()
-        output, err = capfd.readouterr()
+        output, _ = capfd.readouterr()
         assert (output.count("Shuffling deck...")==5)
 
     def test_shuffle(self):

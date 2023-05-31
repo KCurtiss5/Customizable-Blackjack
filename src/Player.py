@@ -36,9 +36,9 @@ class Player(Person):
         Person.__init__(self)
         if not isinstance(name, str):
             raise ValueError(f"Error, invalid name: {name}.")
-        self.name = name
-        if not isinstance(money, int) and money > 0:
+        if not isinstance(money, int) or money < 0:
             raise ValueError(f"Error, invalid moneey: {money}.")
+        self.name = name
         self.money = money
         self.extra_hands = []
 
@@ -129,7 +129,7 @@ class PlayerEncoder(JSONEncoder):
 
 
 if __name__ == "__main__":
-    koby = Player("Koby", 1000)
+    koby = Player("R3d", 1000)
     deck = Deck()
     print(koby)
     koby.bet(50)
