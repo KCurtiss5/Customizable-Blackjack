@@ -1,8 +1,8 @@
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
 from unittest.mock import MagicMock
 import os
 import sys
 import pytest
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
 from Card import Card
 from Hand import Hand, Outcome
 from Deck import Deck

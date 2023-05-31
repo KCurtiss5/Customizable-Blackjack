@@ -16,12 +16,12 @@ class Outcome(Enum):
 
 class Hand:
     def __init__(self, bet=0, card_list=None) -> None:
-        if any(not isinstance(card, Card) for card in card_list):
+        if card_list and any(not isinstance(card, Card) for card in card_list):
             raise ValueError(f"Error, invalid card_list: {card_list}.")
         if (not isinstance(bet, int)):
             raise ValueError(
                 f"Error, invalid bet: {bet}.")
-        self.cards = card_list
+        self.cards = card_list if card_list else []
         self.bet = bet
         self.result = Outcome.UNFINISHED
 
