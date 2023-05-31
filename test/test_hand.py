@@ -23,7 +23,7 @@ class TestHand:
         with pytest.raises(ValueError):
             Hand("test", [])
 
-    def test_constructor_with_invalid_cardList(self):
+    def test_constructor_with_invalid_card_list(self):
         self.three_of_hearts = "test"
         with pytest.raises(ValueError):
             self.three_card_hand = Hand(

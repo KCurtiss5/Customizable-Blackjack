@@ -16,16 +16,16 @@ class Person(ABC):
 
 
 class Dealer(Person):
-    def __init__(self, H17=False):
+    def __init__(self, h17=False):
         Person.__init__(self)
-        if (not isinstance(H17, bool)):
+        if (not isinstance(h17, bool)):
             raise ValueError(
-                f"Error, invalid H17: {H17}.")
-        self.H17 = H17  # if true, we hit on 17. Else we stand.
+                f"Error, invalid H17: {h17}.")
+        self.h17 = h17  # if true, we hit on 17. Else we stand.
 
     def should_dealer_hit(self):
         score = self.hand.get_score()
-        return self.H17 if score == 17 else score < 17
+        return self.h17 if score == 17 else score < 17
 
     def reveal(self):
         return f"Dealer has\n{get_hand(self.hand, True)}"
@@ -53,7 +53,6 @@ class Player(Person):
             self.hand.set_result(Outcome.NATURAL)
             return
         self.play_hand(self.hand, deck)
-        return
 
     def play_hand(self, hand: Hand, deck: Deck):
         arg = input(
@@ -100,10 +99,10 @@ class Player(Person):
         if (len(hand) == 2 and hand[0] == hand[1] and self.money >= hand.bet):
             print("Successfully split\n")
             transfer_card = hand.take_card()
-            newHand = Hand(hand.bet, [transfer_card])
+            new_hand = Hand(hand.bet, [transfer_card])
             self.hit(hand, deck)
-            self.hit(newHand, deck)
-            self.extra_hands.append(newHand)
+            self.hit(new_hand, deck)
+            self.extra_hands.append(new_hand)
         else:
             print("You can't split.")
             self.play_hand(hand, deck)

@@ -15,7 +15,7 @@ class Outcome(Enum):
 
 
 class Hand:
-    def __init__(self, bet=0, card_list=[]) -> None:
+    def __init__(self, bet=0, card_list=None) -> None:
         if any(not isinstance(card, Card) for card in card_list):
             raise ValueError(f"Error, invalid card_list: {card_list}.")
         if (not isinstance(bet, int)):
@@ -41,7 +41,7 @@ class Hand:
         self.cards.append(card)
 
     def get_score(self) -> int:
-        self.numAce = 0
+        self.num_aces = 0
         score = 0
         for card in self.cards:
             if (card.num != "Ace"):
@@ -50,9 +50,9 @@ class Hand:
                 else:
                     score += 10
             else:
-                self.numAce += 1
+                self.num_aces += 1
                 score += 1
-        for _ in range(0, self.numAce):
+        for _ in range(0, self.num_aces):
             if (score + 10 <= 21):
                 score += 10
         return score
