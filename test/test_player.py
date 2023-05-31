@@ -8,6 +8,7 @@ from Hand import Hand, Outcome
 from Deck import Deck
 from Player import Player
 
+INPUT = "builtins.input"
 
 class TestPlayer:
 
@@ -40,13 +41,13 @@ class TestPlayer:
         assert self.player.money == 1000
 
     def test_bet(self, monkeypatch):
-        monkeypatch.setattr('builtins.input', lambda _: "50")
+        monkeypatch.setattr(INPUT, lambda _: "50")
         self.player.bet(5)
         assert self.player.hand.bet == 50
 
     def test_invalid_bet(self, monkeypatch):
         responses = iter(['50', '250'])
-        monkeypatch.setattr('builtins.input', lambda _: next(responses))
+        monkeypatch.setattr(INPUT, lambda _: next(responses))
         self.player.bet(100)
         assert self.player.hand.bet == 250
 
@@ -56,13 +57,13 @@ class TestPlayer:
     def test_stand_is_called(self, monkeypatch):
         mock = Player
         mock.stand = MagicMock()
-        monkeypatch.setattr('builtins.input', lambda _: "stand")
+        monkeypatch.setattr(INPUT, lambda _: "stand")
         mock.play(self.player, self.deck)
         mock.stand.assert_called_once()
         assert self.player.hand.result == Outcome.UNFINISHED
 
     def test_stand(self, monkeypatch, capfd):
-        monkeypatch.setattr('builtins.input', lambda _: "stand")
+        monkeypatch.setattr(INPUT, lambda _: "stand")
         self.player.play(self.deck)
         output, _ = capfd.readouterr()
         assert self.player.hand.result == Outcome.UNFINISHED
@@ -72,7 +73,7 @@ class TestPlayer:
     def test_hit_is_called(self, monkeypatch):
         mock = Player
         mock.hit = MagicMock()
-        monkeypatch.setattr('builtins.input', lambda _: "hit")
+        monkeypatch.setattr(INPUT, lambda _: "hit")
         mock.play(self.player, self.deck)
         mock.hit.assert_called_once()
         assert self.player.hand.result == Outcome.UNFINISHED
