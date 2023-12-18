@@ -68,8 +68,7 @@ class Player(Person):
         elif (arg == "split"):
             self.split_hand(hand, deck)
         else:
-            print(
-                "Actions are: \"hit\", \"stand\", \"double\", \"surrender\" or \"split\"")
+            print('Use "hit", "stand", "double", "surrender" or "split"')
 
     def hit(self, hand: Hand, deck: Deck, continue_with_hand=True):
         hand.receive_card(deck.deal_card())
@@ -112,7 +111,7 @@ class Player(Person):
             print("Surrendering...")
             hand.set_result(Outcome.SURRENEDERED)
         else:
-            print("Can't surrender. You can only surrender on your first action.")
+            print("You can only surrender on your first action.")
             self.play_hand(hand, deck)
 
     def __str__(self):
