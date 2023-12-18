@@ -63,6 +63,6 @@ def make_red(input: str) -> str:
     return f"\033[91m{input}\033[00m"
 
 
-def printBanner():
+def print_banner():
     clear_terminal()
     print(get_file_contents(".banner.txt"))

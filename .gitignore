@@ -130,3 +130,6 @@ dmypy.json
 
 # Sonarlint
 .scannerwork/
+
+# VSCode settings
+.vscode/

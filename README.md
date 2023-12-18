@@ -6,6 +6,7 @@
     |___/|____||_|_| \___||_|\_\ \__/ |_|_| \___||_|\_\
 
  [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+ [![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-black.svg)](https://sonarcloud.io/summary/new_code?id=CustomizableBlackjack)
 
 By: Koby Curtiss
 

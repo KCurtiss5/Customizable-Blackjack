@@ -6,9 +6,9 @@ class Deck:
     def __init__(self, deck_num=1, max_turns=1):
         if not isinstance(deck_num, int) or deck_num <= 0:
             raise ValueError(f"Error, invalid deck_num: {deck_num}.")
-        self.deck_num = deck_num
         if not isinstance(max_turns, int) or max_turns <= 0:
             raise ValueError(f"Error, invalid max_turns: {max_turns}.")
+        self.deck_num = deck_num
         self.max_turns = max_turns
         self.deck = self.build_deck()
         self.used_cards = []
@@ -36,7 +36,6 @@ class Deck:
         self.deck = self.deck + self.used_cards
         self.used_cards = []
         shuffle(self.deck)
-        return
 
     def deal_card(self) -> Card:
         if (len(self.deck) == 0):
