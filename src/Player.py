@@ -125,14 +125,3 @@ class PlayerEncoder(JSONEncoder):
             "name": obj.name,
             "money": obj.money
         }
-
-
-if __name__ == "__main__":
-    koby = Player("R3d", 1000)
-    deck = Deck()
-    print(koby)
-    koby.bet(50)
-    koby.add_card_to_hand(Card("Hearts", "Ace"))
-    koby.add_card_to_hand(Card("Clubs", "Ace"))
-    koby.play(deck)
-    print(koby.hand.result)
