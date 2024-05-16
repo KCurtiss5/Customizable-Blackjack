@@ -1,11 +1,13 @@
-from Card import Card
-from Hand import Hand, Outcome
-from Deck import Deck
-from abc import ABC, abstractmethod
-from helper_functions import get_hand, validate_int_input
 from json import JSONEncoder
+import dataclasses
+from abc import ABC, abstractmethod
+from card import Card
+from deck import Deck
+from hand import Hand, Outcome
+from helper_functions import get_hand, validate_int_input
 
 
+@dataclasses.dataclass
 class Person(ABC):
     @abstractmethod
     def __init__(self):
@@ -18,7 +20,7 @@ class Person(ABC):
 class Dealer(Person):
     def __init__(self, h17=False):
         Person.__init__(self)
-        if (not isinstance(h17, bool)):
+        if not isinstance(h17, bool):
             raise ValueError(
                 f"Error, invalid H17: {h17}.")
         self.h17 = h17  # if true, we hit on 17. Else we stand.
@@ -57,15 +59,15 @@ class Player(Person):
     def play_hand(self, hand: Hand, deck: Deck):
         arg = input(
             f"What do you want to do, {self.name}?: ").lower().strip()
-        if (arg == 'hit'):
+        if arg == 'hit':
             self.hit(hand, deck)
-        elif (arg == 'stand'):
+        elif arg == 'stand':
             self.stand()
-        elif (arg == "double"):
+        elif arg == "double":
             self.double(hand, deck)
-        elif (arg == "surrender"):
+        elif arg == "surrender":
             self.surrender(hand, deck)
-        elif (arg == "split"):
+        elif arg == "split":
             self.split_hand(hand, deck)
         else:
             print('Use "hit", "stand", "double", "surrender" or "split"')
@@ -73,10 +75,12 @@ class Player(Person):
     def hit(self, hand: Hand, deck: Deck, continue_with_hand=True):
         hand.receive_card(deck.deal_card())
         print(f"{hand}")
-        if (hand.get_score() < 21):
-            self.play_hand(hand, deck) if continue_with_hand else print(
-                f"Finished with {hand.get_score()}")
-        elif (hand.get_score() > 21):
+        if hand.get_score() < 21:
+            if continue_with_hand:
+                self.play_hand(hand, deck)
+            else:
+                print(f"Finished with {hand.get_score()}")
+        elif hand.get_score() > 21:
             print("Oops, you busted.")
             hand.set_result(Outcome.BUST)
         else:
@@ -115,12 +119,26 @@ class Player(Person):
             self.play_hand(hand, deck)
 
     def __str__(self):
-        return (f"{self.name}, you have ${self.money}.")
+        return f"{self.name}, you have ${self.money}."
 
 
 class PlayerEncoder(JSONEncoder):
-    def default(self, obj):
+    def default(self, o):
         return {
-            "name": obj.name,
-            "money": obj.money
+            "name": o.name,
+            "money": o.money
         }
+
+
+def main():
+    deck = Deck(5, 10)
+    hand = Hand(50)
+    hand.receive_card(deck.deal_card())
+    hand.receive_card(deck.deal_card())
+    k = Player('R3d', 5000)
+    k.hand = hand
+    k.play(deck)
+
+
+if __name__ == "__main__":
+    main()

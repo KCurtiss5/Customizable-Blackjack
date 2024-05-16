@@ -1,5 +1,5 @@
-from Card import Card
 from random import shuffle
+from card import Card
 
 
 class Deck:
@@ -27,7 +27,7 @@ class Deck:
 
     def increment_turn_count(self) -> None:
         self.turn_counter += 1
-        if (self.turn_counter >= self.max_turns):
+        if self.turn_counter >= self.max_turns:
             self.turn_counter = 0
             self.shuffle()
 
@@ -38,9 +38,9 @@ class Deck:
         shuffle(self.deck)
 
     def deal_card(self) -> Card:
-        if (len(self.deck) == 0):
+        if len(self.deck) == 0:
             self.shuffle()
             self.turn_counter = 0
         card = self.deck.pop(0)
         self.used_cards.append(card)
-        return (card)
+        return card

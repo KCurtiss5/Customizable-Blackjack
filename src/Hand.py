@@ -1,7 +1,7 @@
 from enum import Enum, auto
-from Card import Card
-from helper_functions import get_hand
 from math import floor
+from card import Card
+from helper_functions import get_hand
 
 
 class Outcome(Enum):
@@ -16,11 +16,14 @@ class Outcome(Enum):
 
 class Hand:
     def __init__(self, bet=0, card_list=None) -> None:
+        self.cards = self.bet = self.result = None
+        self._initalize(bet, card_list)
+
+    def _initalize(self, bet=0, card_list=None) -> None:
         if card_list and any(not isinstance(card, Card) for card in card_list):
             raise ValueError(f"Error, invalid card_list: {card_list}.")
-        if (not isinstance(bet, int)):
-            raise ValueError(
-                f"Error, invalid bet: {bet}.")
+        if not isinstance(bet, int):
+            raise ValueError(f"Error, invalid bet: {bet}.")
         self.cards = card_list if card_list else []
         self.bet = bet
         self.result = Outcome.UNFINISHED
@@ -32,7 +35,7 @@ class Hand:
         self.result = outcome
 
     def clear_hand(self) -> None:
-        self.__init__(0)
+        self._initalize()
 
     def take_card(self) -> Card:
         return self.cards.pop()
@@ -41,33 +44,27 @@ class Hand:
         self.cards.append(card)
 
     def get_score(self) -> int:
-        self.num_aces = 0
+        num_aces = 0
         score = 0
         for card in self.cards:
-            if (card.num != "Ace"):
-                if (isinstance(card.num, int)):
+            if card.num != "Ace":
+                if isinstance(card.num, int):
                     score += card.num
                 else:
                     score += 10
             else:
-                self.num_aces += 1
+                num_aces += 1
                 score += 1
-        for _ in range(0, self.num_aces):
-            if (score + 10 <= 21):
+        for _ in range(0, num_aces):
+            if score + 10 <= 21:
                 score += 10
         return score
 
     def money_owed(self) -> int:
-        if self.result == Outcome.SURRENEDERED:
-            return floor(-0.5 * self.bet)
-        elif self.result == Outcome.NATURAL:
-            return floor(1.5 * self.bet)
-        elif self.result == Outcome.WIN:
-            return floor(1 * self.bet)
-        elif self.result == Outcome.PUSH:
-            return 0
-        else:  # bust or lose
-            return floor(-1 * self.bet)
+        owed = {Outcome.SURRENEDERED: -0.5, Outcome.NATURAL: 1.5,
+                Outcome.WIN: 1, Outcome.PUSH: 0,
+                Outcome.BUST: -1, Outcome.LOSE: -1}
+        return floor(owed[self.result] * self.bet)  # bust or lose
 
     def __len__(self) -> int:
         return len(self.cards)

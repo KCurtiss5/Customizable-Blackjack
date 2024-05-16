@@ -1,9 +1,9 @@
-import pytest
 import sys
 import os
+import pytest
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
-from Card import Card
-from Hand import Hand
+from card import Card
+from hand import Hand
 
 
 class TestHand:
@@ -41,34 +41,34 @@ class TestHand:
 
     def test_receive_card(self):
         self.three_card_hand.receive_card(self.three_of_hearts)
-        assert (len(self.three_card_hand) == 4)
+        assert len(self.three_card_hand) == 4
 
     def test_take_card(self):
         popped_card = self.three_card_hand.take_card()
-        assert (popped_card == self.ace_of_spades)
-        assert (len(self.three_card_hand) == 2)
+        assert popped_card == self.ace_of_spades
+        assert len(self.three_card_hand) == 2
 
     def test_get_score_one_ace(self):
-        assert (self.three_card_hand.get_score() == 14)
+        assert self.three_card_hand.get_score() == 14
 
     def test_get_score_bust(self):
         self.three_card_hand.receive_card(self.ten_of_clubs)
-        assert (self.three_card_hand.get_score() == 24)
+        assert self.three_card_hand.get_score() == 24
 
     def test_get_score_two_aces(self):
         self.three_card_hand.receive_card(self.ace_of_spades)
         self.three_card_hand.receive_card(self.ace_of_spades)
-        assert (self.three_card_hand.get_score() == 16)
+        assert self.three_card_hand.get_score() == 16
 
     def test_get_score_one_ace_gets_to_21(self):
         test_hand = Hand(
             200, [self.ten_of_clubs, self.ace_of_spades, self.ace_of_spades])
-        assert (test_hand.get_score() == 12)
+        assert test_hand.get_score() == 12
 
     def test_no_card_hand_score(self):
         for _ in range(0, 3):
             self.three_card_hand.take_card()
-        assert (self.three_card_hand.get_score() == 0)
+        assert self.three_card_hand.get_score() == 0
 
     def test_clear_hand(self):
         self.three_card_hand.clear_hand()
