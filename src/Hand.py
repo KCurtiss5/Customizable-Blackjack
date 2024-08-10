@@ -1,6 +1,6 @@
 from enum import Enum, auto
 from math import floor
-from card import Card
+from Card import Card
 from helper_functions import get_hand
 
 

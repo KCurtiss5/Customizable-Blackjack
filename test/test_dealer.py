@@ -2,9 +2,9 @@ import sys
 import os
 import pytest
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
-from card import Card
-from hand import Hand
-from player import Dealer
+from Card import Card
+from Hand import Hand
+from Player import Dealer
 
 class TestDealer:
 

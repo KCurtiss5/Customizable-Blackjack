@@ -3,8 +3,8 @@ import sys
 from copy import deepcopy
 import pytest
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
-from card import Card
-from deck import Deck
+from Card import Card
+from Deck import Deck
 
 class TestDeck:
 

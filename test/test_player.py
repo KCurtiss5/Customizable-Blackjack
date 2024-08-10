@@ -3,10 +3,10 @@ import os
 import sys
 import pytest
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
-from card import Card
-from deck import Deck
-from hand import Hand, Outcome
-from player import Player
+from Card import Card
+from Deck import Deck
+from Hand import Hand, Outcome
+from Player import Player
 
 INPUT = "builtins.input"
 

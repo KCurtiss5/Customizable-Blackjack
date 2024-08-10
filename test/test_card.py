@@ -2,7 +2,7 @@ import sys
 import os
 import pytest
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
-from card import Card
+from Card import Card
 
 
 class TestCard:

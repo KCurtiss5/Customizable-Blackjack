@@ -1,9 +1,9 @@
 from json import JSONEncoder
 import dataclasses
 from abc import ABC, abstractmethod
-from card import Card
-from deck import Deck
-from hand import Hand, Outcome
+from Card import Card
+from Deck import Deck
+from Hand import Hand, Outcome
 from helper_functions import get_hand, validate_int_input
 
 
