@@ -131,9 +131,10 @@ class PlayerEncoder(JSONEncoder):
     
 if __name__ == "__main__":
     p = Player("Test", 5000)
-    d = Deck(1, 50)
-    p.add_card_to_hand(d.deal_card())
-    p.add_card_to_hand(d.deal_card())
+    card = Card("Hearts", 5)
+    d = Deck(1, 50, [card, card, card])
+    p.add_card_to_hand(card)
+    p.add_card_to_hand(card)
     p.hand.set_bet(50)
     p.play(d)
     print(p.hand.result)
