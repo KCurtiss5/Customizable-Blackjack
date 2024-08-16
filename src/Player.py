@@ -90,7 +90,7 @@ class Player(Person):
         print("Standing")
 
     def double(self, hand, deck):
-        if hand.bet*2 > self.money:
+        if hand.bet * 2 > self.money:
             print("You cannot double down. Not enough money.")
             self.play_hand(hand, deck)
         else:
@@ -128,17 +128,12 @@ class PlayerEncoder(JSONEncoder):
             "name": o.name,
             "money": o.money
         }
-
-
-def main():
-    deck = Deck(5, 10)
-    hand = Hand(50)
-    hand.receive_card(deck.deal_card())
-    hand.receive_card(deck.deal_card())
-    k = Player('R3d', 5000)
-    k.hand = hand
-    k.play(deck)
-
-
+    
 if __name__ == "__main__":
-    main()
+    p = Player("Test", 5000)
+    d = Deck(1, 50)
+    p.add_card_to_hand(d.deal_card())
+    p.add_card_to_hand(d.deal_card())
+    p.hand.set_bet(50)
+    p.play(d)
+    print(p.hand.result)

@@ -77,3 +77,6 @@ class TestPlayer:
         mock.play(self.player, self.deck)
         mock.hit.assert_called_once()
         assert self.player.hand.result == Outcome.UNFINISHED
+
+
+#TODO: Write a test case that tests whether you can add any object to a players hand or only a card.
