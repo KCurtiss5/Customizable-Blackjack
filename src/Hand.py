@@ -28,10 +28,12 @@ class Hand:
         self.bet = bet
         self.result = Outcome.UNFINISHED
 
-    def set_bet(self, bet: int):
+    def set_bet(self, bet) -> None:
+        if (not isinstance(bet, int)):
+            raise ValueError(f"Error, invalid bet: {bet}.")
         self.bet = bet
 
-    def set_result(self, outcome: Outcome):
+    def set_result(self, outcome: Outcome) -> None:
         self.result = outcome
 
     def clear_hand(self) -> None:
@@ -40,7 +42,9 @@ class Hand:
     def take_card(self) -> Card:
         return self.cards.pop()
 
-    def receive_card(self, card: Card) -> None:
+    def receive_card(self, card) -> None:
+        if (not isinstance(card, Card)):
+            raise ValueError(f"Error, invalid card: {card}.")
         self.cards.append(card)
 
     def get_score(self) -> int:

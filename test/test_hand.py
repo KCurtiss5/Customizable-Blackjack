@@ -28,6 +28,14 @@ class TestHand:
         with pytest.raises(ValueError):
             self.three_card_hand = Hand(
                 500, [self.three_of_hearts, self.ten_of_clubs, self.ace_of_spades])
+            
+    def test_receive_card_with_invalid_card(self):
+        with pytest.raises(ValueError):
+            self.three_card_hand.receive_card(5)
+
+    def test_set_bet_with_invalid_bet(self):
+        with pytest.raises(ValueError):
+            self.three_card_hand.set_bet("bad_int")
 
     def test_variables(self):
         assert self.three_card_hand.bet == 500
