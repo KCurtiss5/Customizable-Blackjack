@@ -71,6 +71,7 @@ class Player(Person):
             self.split_hand(hand, deck)
         else:
             print('Use "hit", "stand", "double", "surrender" or "split"')
+            self.play_hand(hand, deck)
 
     def hit(self, hand: Hand, deck: Deck, continue_with_hand=True):
         hand.receive_card(deck.deal_card())
