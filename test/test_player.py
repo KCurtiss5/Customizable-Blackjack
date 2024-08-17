@@ -54,22 +54,6 @@ class TestPlayer:
     def test_string_representation(self):
         assert str(self.player) == "Test, you have $1000."
 
-    def test_stand_is_called(self, monkeypatch):
-        mock = Player
-        mock.stand = MagicMock()
-        monkeypatch.setattr(INPUT, lambda _: "stand")
-        mock.play(self.player, self.deck)
-        mock.stand.assert_called_once()
-        assert self.player.hand.result == Outcome.UNFINISHED
-
-    def test_stand(self, monkeypatch, capfd):
-        monkeypatch.setattr(INPUT, lambda _: "stand")
-        self.player.play(self.deck)
-        output, _ = capfd.readouterr()
-        assert self.player.hand.result == Outcome.UNFINISHED
-        assert len(self.player.hand) == 2
-        #assert "Standing" in output
-
     def test_hit_is_called(self, monkeypatch):
         mock = Player
         mock.hit = MagicMock()
@@ -78,5 +62,81 @@ class TestPlayer:
         mock.hit.assert_called_once()
         assert self.player.hand.result == Outcome.UNFINISHED
 
+    def test_hit_is_called_capitalized(self, monkeypatch):
+        mock = Player
+        mock.hit = MagicMock()
+        monkeypatch.setattr(INPUT, lambda _: "Hit")
+        mock.play(self.player, self.deck)
+        mock.hit.assert_called_once()
+        assert self.player.hand.result == Outcome.UNFINISHED
 
-#TODO: Write a test case that tests whether you can add any object to a players hand or only a card.
+    def test_stand_is_called(self, monkeypatch):
+        mock = Player
+        mock.stand = MagicMock()
+        monkeypatch.setattr(INPUT, lambda _: "stand")
+        mock.play(self.player, self.deck)
+        mock.stand.assert_called_once()
+
+    def test_stand_is_called_capitalized(self, monkeypatch):
+        mock = Player
+        mock.stand = MagicMock()
+        monkeypatch.setattr(INPUT, lambda _: "Stand")
+        mock.play(self.player, self.deck)
+        mock.stand.assert_called_once()
+
+    def test_stand_is_called_funky_spelling(self, monkeypatch):
+        mock = Player
+        mock.stand = MagicMock()
+        monkeypatch.setattr(INPUT, lambda _: "sTaND")
+        mock.play(self.player, self.deck)
+        mock.stand.assert_called_once()
+
+    def test_double_is_called(self, monkeypatch):
+        mock = Player
+        mock.double = MagicMock()
+        monkeypatch.setattr(INPUT, lambda _: "double")
+        mock.play(self.player, self.deck)
+        mock.double.assert_called_once()
+
+    def test_double_is_called_capitalized(self, monkeypatch):
+        mock = Player
+        mock.double = MagicMock()
+        monkeypatch.setattr(INPUT, lambda _: "Double")
+        mock.play(self.player, self.deck)
+        mock.double.assert_called_once()
+
+    def test_surrender_is_called(self, monkeypatch):
+        mock = Player
+        mock.surrender = MagicMock()
+        monkeypatch.setattr(INPUT, lambda _: "surrender")
+        mock.play(self.player, self.deck)
+        mock.surrender.assert_called_once()
+    
+    def test_surrender_is_called_capitalized(self, monkeypatch):
+        mock = Player
+        mock.surrender = MagicMock()
+        monkeypatch.setattr(INPUT, lambda _: "Surrender")
+        mock.play(self.player, self.deck)
+        mock.surrender.assert_called_once()
+
+    def test_split_is_called(self, monkeypatch):
+        mock = Player
+        mock.split = MagicMock()
+        monkeypatch.setattr(INPUT, lambda _: "split")
+        mock.play(self.player, self.deck)
+        mock.split.assert_called_once()
+
+    def test_split_is_called_capitalized(self, monkeypatch):
+        mock = Player
+        mock.split = MagicMock()
+        monkeypatch.setattr(INPUT, lambda _: "Split")
+        mock.play(self.player, self.deck)
+        mock.split.assert_called_once()
+
+    def test_stand(self, monkeypatch, capfd):
+        monkeypatch.setattr(INPUT, lambda _: "stand")
+        self.player.play(self.deck)
+        output, _ = capfd.readouterr()
+        assert self.player.hand.result == Outcome.UNFINISHED
+        assert len(self.player.hand) == 2
+        #assert "Standing" in output

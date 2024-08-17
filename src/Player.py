@@ -68,7 +68,7 @@ class Player(Person):
         elif arg == "surrender":
             self.surrender(hand, deck)
         elif arg == "split":
-            self.split_hand(hand, deck)
+            self.split(hand, deck)
         else:
             print('Use "hit", "stand", "double", "surrender" or "split"')
             self.play_hand(hand, deck)
@@ -99,7 +99,7 @@ class Player(Person):
             hand.set_bet(hand.bet*2)
             self.hit(hand, deck, False)
 
-    def split_hand(self, hand: Hand, deck: Deck):
+    def split(self, hand: Hand, deck: Deck):
         if (len(hand) == 2 and hand[0] == hand[1] and self.money >= hand.bet):
             print("Successfully split\n")
             transfer_card = hand.take_card()
