@@ -1,7 +1,6 @@
 from json import JSONEncoder
 import dataclasses
 from abc import ABC, abstractmethod
-from Card import Card
 from Deck import Deck
 from Hand import Hand, Outcome
 from helper_functions import get_hand, validate_int_input
@@ -12,9 +11,6 @@ class Person(ABC):
     @abstractmethod
     def __init__(self):
         self.hand = Hand()
-
-    def add_card_to_hand(self, card: Card):
-        self.hand.receive_card(card)
 
 
 class Dealer(Person):
