@@ -31,7 +31,7 @@ Blackjack is a fun gambling game involving deck(s) of cards. It is unique as a c
 
 ## About the Project
 
-This codebase is a **highly-customizable** text-only blackjack game. It is working and tested on both windows and linux environments. Customization options include, but are not limited to:
+This codebase is a **highly-customizable** text-only blackjack game. It functions in both windows and linux environments as long as it meets the requirements. Customization options include, but are not limited to:
 
 - number of decks
 - rounds played before shuffling deck
@@ -43,7 +43,7 @@ This codebase is a **highly-customizable** text-only blackjack game. It is worki
 - custom player creation options
 - max players at a table
 
-This package was meant to be utilized both as entertainment and as a learning tool. The customization is meant to play on and learn different variations of blackjack.
+This package is meant to be utilized both as entertainment and as a learning tool. The customization allows for more fun but also for different blackjack environments. This code is also tested rigorously with unit tests having 71 tests!
 
 ## Goals for the Project
 
