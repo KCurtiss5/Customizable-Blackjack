@@ -22,4 +22,4 @@ class Card:
         return self.num == other.num
 
     def __str__(self):
-        return f"{get_card(self)}"
+        return get_card(self)
