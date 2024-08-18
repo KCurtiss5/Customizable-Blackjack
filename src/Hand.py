@@ -75,10 +75,10 @@ class Hand:
             self.set_result(Outcome.PUSH)
 
     def calculate_payout(self) -> int:
-        owed = {Outcome.SURRENEDERED: -0.5, Outcome.NATURAL: 1.5,
-                Outcome.WIN: 1, Outcome.PUSH: 0,
-                Outcome.BUST: -1, Outcome.LOSE: -1}
-        return floor(owed[self.result] * self.bet)  # bust or lose
+        return floor({  Outcome.SURRENEDERED: -0.5, Outcome.NATURAL: 1.5,
+                        Outcome.WIN: 1, Outcome.PUSH: 0,
+                        Outcome.BUST: -1,  Outcome.LOSE: -1
+        }[self.result] * self.bet)
     
     def __len__(self) -> int:
         return len(self.cards)
