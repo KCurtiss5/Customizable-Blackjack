@@ -63,13 +63,23 @@ class Hand:
             if score + 10 <= 21:
                 score += 10
         return score
+    
+    def judge_hand(self, dealer_score: int) -> None:
+        if self.result != Outcome.UNFINISHED:
+            return
+        if dealer_score < self.get_score() or dealer_score > 21:
+            self.set_result(Outcome.WIN)
+        elif dealer_score > self.get_score():
+            self.set_result(Outcome.LOSE)
+        else:
+            self.set_result(Outcome.PUSH)
 
-    def money_owed(self) -> int:
+    def calculate_payout(self) -> int:
         owed = {Outcome.SURRENEDERED: -0.5, Outcome.NATURAL: 1.5,
                 Outcome.WIN: 1, Outcome.PUSH: 0,
                 Outcome.BUST: -1, Outcome.LOSE: -1}
         return floor(owed[self.result] * self.bet)  # bust or lose
-
+    
     def __len__(self) -> int:
         return len(self.cards)
 
