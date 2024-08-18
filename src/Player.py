@@ -75,7 +75,7 @@ class Player(Person):
 
     def hit(self, hand: Hand, deck: Deck, continue_with_hand=True):
         hand.receive_card(deck.deal_card())
-        print(f"{hand}")
+        print(hand)
         if hand.get_score() < 21:
             if continue_with_hand:
                 self.play_hand(hand, deck)
@@ -129,13 +129,3 @@ class PlayerEncoder(JSONEncoder):
             "name": o.name,
             "money": o.money
         }
-    
-if __name__ == "__main__":
-    p = Player("Test", 5000)
-    card = Card("Hearts", 5)
-    d = Deck(1, 50, [card, card, card])
-    p.add_card_to_hand(card)
-    p.add_card_to_hand(card)
-    p.hand.set_bet(50)
-    p.play(d)
-    print(p.hand.result)
