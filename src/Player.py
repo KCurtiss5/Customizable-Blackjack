@@ -96,7 +96,7 @@ class Player(Person):
             self.hit(hand, deck, False)
 
     def split(self, hand: Hand, deck: Deck):
-        if (len(hand) == 2 and hand[0] == hand[1] and self.money >= hand.bet):
+        if (len(hand) == 2 and hand[0] == hand[1] and self.money >= 2*hand.bet):
             print("Successfully split\n")
             transfer_card = hand.take_card()
             new_hand = Hand(hand.bet, [transfer_card])

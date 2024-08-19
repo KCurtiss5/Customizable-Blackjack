@@ -43,7 +43,7 @@ This codebase is a **highly-customizable** text-only blackjack game. It function
 - custom player creation options
 - max players at a table
 
-This package is meant to be utilized both as entertainment and as a learning tool. The customization allows for more fun but also for different blackjack environments. This code is also tested rigorously with unit tests having 71 tests!
+This package is meant to be utilized both as entertainment and as a learning tool. The customization allows for more fun but also for different blackjack environments. This code is also tested rigorously with unit tests having 97 passing tests!
 
 ## Goals for the Project
 
