@@ -1,6 +1,6 @@
-import pytest
 import sys
 import os
+import pytest
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
 from Card import Card
 from Hand import Hand
@@ -17,27 +17,27 @@ class TestDealer:
         self.hand = Hand(
             0, [self.three_of_hearts, self.three_of_hearts, self.ten_of_clubs, self.ace_of_spades])
         self.dealer.hand = self.hand
-        
+
     def test_constructor(self):
         assert self.dealer
 
-    def test_invalid_constructor_ValueError(self):
+    def test_invalid_constructor_value_error(self):
         with pytest.raises(ValueError):
             self.dealer = Dealer(500)
 
-    def test_invalid_constructor_TypeError(self):
+    def test_invalid_constructor_type_error(self):
         with pytest.raises(TypeError):
             self.dealer = Dealer(500, 500, 500)
 
     def test_constructor_with_boolean(self):
         self.dealer = Dealer(True)
         assert self.dealer
-    
-    def test_dealer_S17(self):
+
+    def test_dealer_s17(self):
         assert self.dealer.hand.get_score() == 17
         assert not self.dealer.should_dealer_hit()
 
-    def test_dealer_H17(self):
+    def test_dealer_h17(self):
         self.dealer = Dealer(True)
         self.dealer.hand = self.hand
         assert self.dealer.hand.get_score() == 17
@@ -55,4 +55,3 @@ class TestDealer:
         assert len(self.dealer.reveal().split("\n")) == 8
         assert "Dealer has" in self.dealer.reveal()
         assert '>' in self.dealer.reveal()
-

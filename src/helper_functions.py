@@ -3,14 +3,14 @@ from pathlib import Path
 
 
 def validate_int_input(message: str, lower: int, upper: int) -> int:
-    while (True):
+    while True:
         try:
             option = int(input(message))
             if ((option < lower) or (option > upper)):
                 print(
                     f"Please enter a number between {lower} and {upper}")
                 continue
-            return (option)
+            return option
         except ValueError:
             print("Please enter a positive integer.")
 
@@ -23,13 +23,13 @@ def locate_file(file: str) -> str:
     cwd = Path().absolute()
     try:
         path = next(cwd.rglob(file))
-    except StopIteration:
-        raise RuntimeError(f"Error: {file} not found")
+    except StopIteration as e:
+        raise RuntimeError(f'Error: {file} not found') from e
     return path
 
 
 def get_file_contents(file: str) -> list:
-    return open(locate_file(file), "r").read()
+    return open(locate_file(file), "r", encoding="utf-8").read()
 
 
 def get_card(card) -> str:
@@ -38,8 +38,8 @@ def get_card(card) -> str:
 
 def get_hand(hand, hidden_card=False, hidden_index=1):
     cards = []
-    for index in range(0, len(hand)):
-        if (hidden_card and hidden_index == index):
+    for (index, card) in enumerate(hand):
+        if hidden_card and index == hidden_index:
             cards.append(get_file_contents("back.txt"))
         else:
             cards.append(get_card(hand[index]))
@@ -59,10 +59,10 @@ def add_suit(string: str, card) -> str:
     return string.replace('x', suits[card.suit])
 
 
-def make_red(input: str) -> str:
-    return f"\033[91m{input}\033[00m"
+def make_red(string: str) -> str:
+    return f"\033[91m{string}\033[00m"
 
 
-def printBanner():
+def print_banner():
     clear_terminal()
     print(get_file_contents(".banner.txt"))
