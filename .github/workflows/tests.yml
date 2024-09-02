@@ -1,4 +1,4 @@
-name: Run Tests
+name: Run Tests & Do SonarCloud Analysis
 
 on:
   push:
@@ -38,6 +38,15 @@ jobs:
       with:
         distribution: 'adopt'
         java-version: '11'
+
+    - name: Set up sonar-scanner
+      run: |
+        export SONAR_SCANNER_VERSION=6.1.0.4477
+        export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux-x64
+        curl --create-dirs -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux-x64.zip
+        unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
+        export PATH=$SONAR_SCANNER_HOME/bin:$PATH
+        export SONAR_SCANNER_OPTS="-server"
 
     - name: SonarCloud Scan
       env:
