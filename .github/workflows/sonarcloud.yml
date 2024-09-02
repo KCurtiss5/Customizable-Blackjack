@@ -7,7 +7,7 @@ on:
   pull_request:
     branches:
       - main
-
+      
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -36,6 +36,11 @@ jobs:
       with:
         distribution: 'adopt'
         java-version: '11'
+
+    - name: Install tox and any other packages
+      run: pip install tox
+    - name: Run tox
+      run: tox -e py
 
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@v2
