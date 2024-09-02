@@ -33,8 +33,19 @@ jobs:
     - name: Verify coverage report
       run: ls -l coverage.xml
 
-    - name: Upload coverage report
-      uses: actions/upload-artifact@v4
+    - name: Set up Java (required for SonarCloud)
+      uses: actions/setup-java@v3
       with:
-        name: coverage-report
-        path: coverage.xml
+        distribution: 'adopt'
+        java-version: '11'
+
+    - name: SonarCloud Scan
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: |
+        sonar-scanner \
+        -Dsonar.organization=kobystestorg \
+        -Dsonar.projectKey=CustomizableBlackjack \
+        -Dsonar.sources=. \
+        -Dsonar.host.url=https://sonarcloud.io
+        -Dsonar.python.coverage.reportPaths=coverage.xml
