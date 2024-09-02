@@ -1,4 +1,4 @@
-name: Run Tests & Do SonarCloud Analysis
+name: SonarCloud Analysis
 
 on:
   push:
@@ -28,6 +28,7 @@ jobs:
     - name: cat coverage report
       run: |
         cat coverage.xml
+        pwd
 
     - name: Set up Java (required for SonarCloud)
       uses: actions/setup-java@v3
