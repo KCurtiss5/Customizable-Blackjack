@@ -30,6 +30,9 @@ jobs:
       run: |
         pytest --cov=src/ --cov-report=xml
 
+    - name: Verify coverage report
+      run: ls -l coverage.xml
+
     - name: Upload coverage report
       uses: actions/upload-artifact@v3
       with:
