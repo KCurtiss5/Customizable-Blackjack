@@ -24,7 +24,6 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: coverage-report
-        path: .
 
     - name: SonarCloud Scan
       env:
