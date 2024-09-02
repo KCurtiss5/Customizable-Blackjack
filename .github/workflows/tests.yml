@@ -21,9 +21,13 @@ jobs:
         python -m pip install --upgrade pip
         pip install pytest pytest-cov
     
-    - name: Run tests and generate coverage report
+    - name: Generate coverage report
       run: |
         pytest --cov=src/ --cov-report=xml
+
+    - name: cat coverage report
+      run: |
+        cat coverage.xml
 
     - name: Set up Java (required for SonarCloud)
       uses: actions/setup-java@v3
