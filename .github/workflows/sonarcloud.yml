@@ -1,18 +1,35 @@
 name: SonarCloud Analysis
 
 on:
-  workflow_run:
-    workflows: ["Run Tests"]
-    types:
-      - completed
-
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+      
 jobs:
-  sonarcloud:
+  test:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest pytest-cov
+    
+    - name: Generate coverage report
+      run: |
+        pytest --cov=src/ --cov-report=xml
+
+    - name: cat coverage report
+      run: |
+        cat coverage.xml
+        pwd
+        ls -al
 
     - name: Set up Java (required for SonarCloud)
       uses: actions/setup-java@v3
@@ -20,19 +37,10 @@ jobs:
         distribution: 'adopt'
         java-version: '11'
 
-    - name: Download coverage report
-      uses: actions/download-artifact@v3
-      with:
-        name: coverage-report
-        path: .
-
     - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@v2
+      with:
+        args: >
+          -Dsonar.projectBaseDir=${{ github.workspace }}
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: |
-        sonar-scanner \
-        -Dsonar.organization=kobystestorg \
-        -Dsonar.projectKey=CustomizableBlackjack \
-        -Dsonar.sources=. \
-        -Dsonar.host.url=https://sonarcloud.io
-        -Dsonar.python.coverage.reportPaths=coverage.xml
